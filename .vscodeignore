@@ -1,0 +1,6 @@
+.vscode/**
+.eslintrc.js
+.gitignore
+src
+rollup.config.js
+tsconfig.json
