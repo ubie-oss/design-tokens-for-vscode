@@ -68,7 +68,7 @@ connection.onCompletion((textDocumentPosition: TextDocumentPositionParams): Comp
       allCompletionItems.push({
         label: token,
         detail: `${DesignTokens[groupKey][key].value}${note ? ` (${note})` : ''}`,
-        insertText: `var(${token});`,
+        insertText: `var(${token})`,
         kind: groupKey === 'color' ? CompletionItemKind.Color : CompletionItemKind.Value,
       });
     });
