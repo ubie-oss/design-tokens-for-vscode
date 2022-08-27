@@ -39,7 +39,7 @@ type GroupedCompletionItemPatterns = {
 
 const groupedCompletionItemPatterns: GroupedCompletionItemPatterns = {
   color: /color|background|shadow|border|column-rule|filter|opacity|outline|text-decoration/,
-  size: /margin|padding|gap|top|left|right|bottom/,
+  size: /margin|padding|gap|top|left|right|bottom|width|height/,
   text: /font|line-height/,
 };
 
@@ -64,9 +64,10 @@ connection.onCompletion((textDocumentPosition: TextDocumentPositionParams): Comp
   groupKeys.forEach((groupKey) => {
     Object.keys(DesignTokens[groupKey]).map((key) => {
       const token = `--${groupKey}-${key}`;
+      const note = DesignTokens[groupKey][key].attributes['note'] ?? '';
       allCompletionItems.push({
         label: token,
-        detail: `${DesignTokens[groupKey][key].value}`,
+        detail: `${DesignTokens[groupKey][key].value}${note ? ` (${note})` : ''}`,
         insertText: `var(${token});`,
         kind: groupKey === 'color' ? CompletionItemKind.Color : CompletionItemKind.Value,
       });
