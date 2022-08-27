@@ -1,19 +1,25 @@
 {
   "name": "design-tokens-intellisense",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Ubie Design Tokens for VS Code",
-  "private": true,
-  "author": "Ubie, Inc.",
-  "license": "SEE LICENSE IN LICENSE",
+  "publisher": "Ubie, Inc",
   "engines": {
     "vscode": "^1.70.0"
   },
-  "publisher": "Ubie, Inc",
+  "license": "SEE LICENSE IN LICENSE",
+  "displayName": "Ubie Design Tokens for VS Code",
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "Ubie",
+    "Design Tokens"
+  ],
+  "main": "./dist/client.js",
   "activationEvents": [
     "onLanguage:css",
     "onLanguage:scss"
   ],
-  "main": "./dist/client.js",
   "scripts": {
     "build": "tsc -b",
     "dev": "tsc -b -w",
