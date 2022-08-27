@@ -1,5 +1,5 @@
 {
-  "name": "design-tokens-intellisense",
+  "name": "ubie-design-tokens-for-vscode",
   "version": "0.0.1",
   "description": "Ubie Design Tokens for VS Code",
   "publisher": "Ubie, Inc",
@@ -20,30 +20,38 @@
     "onLanguage:css",
     "onLanguage:scss"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ubie-inc/design-tokens-for-vscode.git"
+  },
+  "icon": "docs/ubie-icon.png",
   "scripts": {
-    "build": "tsc -b",
-    "dev": "tsc -b -w",
-    "lint": "run-p lint:*",
-    "lint:eslint": "eslint --ext .ts,.tsx ./src --max-warnings=0",
-    "lint:prettier": "prettier --check src"
+    "vscode:prepublish": "npm run esbuild-base -- --minify",
+    "esbuild-base": "rimraf dist && esbuild ./src/client.ts ./src/server.ts --bundle --outdir=dist --external:vscode --format=cjs --platform=node",
+    "build": "npm run esbuild-base -- --sourcemap",
+    "watch": "npm run esbuild-base -- --sourcemap --watch",
+    "fmt": "prettier --write \"src/**/*.ts\"&& npm run test -- --fix",
+    "test": "eslint src --ext ts && tsc --noEmit",
+    "package": "vsce package"
   },
   "dependencies": {
-    "@ubie/design-tokens": "^0.1.0",
+    "@ubie/design-tokens": "0.1.1",
     "vscode-languageclient": "^8.0.2",
     "vscode-languageserver": "^8.0.2",
     "vscode-languageserver-textdocument": "^1.0.5"
   },
   "devDependencies": {
-    "@rollup/plugin-typescript": "^8.3.4",
     "@types/node": "^18.7.3",
     "@types/vscode": "^1.70.0",
     "@typescript-eslint/eslint-plugin": "^5.33.0",
     "@typescript-eslint/parser": "^5.33.0",
     "@ubie/prettier-config": "^0.1.0",
+    "esbuild": "^0.15.5",
     "eslint": "^8.22.0",
     "eslint-config-prettier": "^8.5.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.7.1",
-    "rollup": "^2.78.0"
+    "rimraf": "^3.0.2",
+    "vsce": "^2.10.2"
   }
 }

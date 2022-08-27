@@ -1,6 +1,8 @@
-.vscode/**
+.vscode
+node_modules
+src
 .eslintrc.js
 .gitignore
-src
-rollup.config.js
+prettier.config.js
 tsconfig.json
+DEVELOPMNET.md

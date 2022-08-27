@@ -1,11 +1,24 @@
 # Ubie Design Tokens for VS Code
 
-## 開発
+## Installation
 
-- Run `npm install` in this folder.
-- Open VS Code on this folder.
-- Press Ctrl+Shift+B to start compiling the client and server in watch mode.
-- Switch to the Run and Debug View in the Sidebar (Ctrl+Shift+D).
-- Select `Launch Client` from the drop down (if it is not already).
-- Press ▷ to run the launch config (F5).
-- If you want to debug the server as well, use the launch configuration `Attach to Server`
+WIP
+
+## Features
+
+### Autocomplete
+
+Autocomplete suggestions for the Ubie Design Tokens
+
+### Hover preview (WIP)
+
+See the exact value of the Ubie Design Tokens's CSS custom property by hovering over it.
+
+## How to use
+
+1. Install and enable the extension.
+2. Open a CSS or Sass file.
+3. Start typing the CSS property you want to set. (e.g. `color: `)
+4. Type the trigger character `--`.
+5. The autocomplete tokens suggestions associated with the typed CSS property will be shown.
+6. Select the token and it will be inserted along with the `var()` function.

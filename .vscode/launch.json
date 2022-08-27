@@ -14,10 +14,7 @@
       "outFiles": [
         "${workspaceFolder}/dist/client.js"
       ],
-      "preLaunchTask": {
-        "type": "npm",
-        "script": "dev"
-      },
+      "preLaunchTask": "npm: watch"
     },
 		{
 			"type": "node",
@@ -25,13 +22,7 @@
 			"name": "Attach to Server",
 			"port": 6009,
 			"restart": true,
-			"outFiles": ["${workspaceRoot}/server/out/**/*.js"]
+			"outFiles": ["${workspaceFolder}/dist/server.js"]
 		},
-  ],
-  "compounds": [
-		{
-			"name": "Client + Server",
-			"configurations": ["Launch Client", "Attach to Server"]
-		}
-	]
+  ]
 }
