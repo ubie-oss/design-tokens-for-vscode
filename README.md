@@ -10,7 +10,7 @@ WIP
 
 Autocomplete suggestions for the Ubie Design Tokens
 
-### Hover preview (WIP)
+### Hover preview
 
 See the exact value of the Ubie Design Tokens's CSS custom property by hovering over it.
 
