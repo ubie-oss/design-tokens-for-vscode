@@ -8,6 +8,7 @@ import {
   TextDocumentPositionParams,
   TextDocumentSyncKind,
   InitializeResult,
+  Hover,
 } from 'vscode-languageserver/node';
 import { TextDocument } from 'vscode-languageserver-textdocument';
 
@@ -26,6 +27,8 @@ connection.onInitialize(() => {
       completionProvider: {
         triggerCharacters: ['--'],
       },
+      // Tell the client that this server supports hover.
+      hoverProvider: true,
     },
   };
   return result;
@@ -39,9 +42,20 @@ type GroupedCompletionItemPatterns = {
 
 const groupedCompletionItemPatterns: GroupedCompletionItemPatterns = {
   color: /color|background|shadow|border|column-rule|filter|opacity|outline|text-decoration/,
-  size: /margin|padding|gap|top|left|right|bottom|width|height/,
+  size: /margin|padding|gap|top|left|right|bottom/,
   text: /font|line-height/,
 };
+
+const tokens: { [key: string]: { value: string; note: string | undefined; groupKey: string } } = {};
+
+Object.keys(DesignTokens).forEach((groupKey) => {
+  Object.keys(DesignTokens[groupKey]).map((key) => {
+    const token = `--${groupKey}-${key}`;
+    const value = `${DesignTokens[groupKey][key].value}`;
+    const note = DesignTokens[groupKey][key].attributes['note'] ?? '';
+    tokens[token] = { value, note, groupKey };
+  });
+});
 
 // This handler provides the list of the token completion items.
 connection.onCompletion((textDocumentPosition: TextDocumentPositionParams): CompletionItem[] => {
@@ -57,24 +71,19 @@ connection.onCompletion((textDocumentPosition: TextDocumentPositionParams): Comp
     end: { line: textDocumentPosition.position.line, character: 1000 },
   });
 
-  const groupKeys = Object.keys(DesignTokens);
   const allCompletionItems: CompletionItem[] = [];
   const filteredCompletionItems: CompletionItem[] = [];
 
-  groupKeys.forEach((groupKey) => {
-    Object.keys(DesignTokens[groupKey]).map((key) => {
-      const token = `--${groupKey}-${key}`;
-      const note = DesignTokens[groupKey][key].attributes['note'] ?? '';
-      allCompletionItems.push({
-        label: token,
-        detail: `${DesignTokens[groupKey][key].value}${note ? ` (${note})` : ''}`,
-        insertText: `var(${token})`,
-        kind: groupKey === 'color' ? CompletionItemKind.Color : CompletionItemKind.Value,
-      });
+  Object.keys(tokens).map((token) => {
+    allCompletionItems.push({
+      label: token,
+      detail: `${tokens[token].value}${tokens[token].note ? ` (${tokens[token].note})` : ''}`,
+      insertText: `var(${token})`,
+      kind: tokens[token].groupKey === 'color' ? CompletionItemKind.Color : CompletionItemKind.Value,
     });
   });
 
-  groupKeys.forEach((groupKey) => {
+  Object.keys(DesignTokens).forEach((groupKey) => {
     if (groupedCompletionItemPatterns[groupKey].test(currentText)) {
       // Filter items for `line-height`, `font-size`, and others
       if (/line-height/.test(currentText)) {
@@ -100,6 +109,40 @@ connection.onCompletion((textDocumentPosition: TextDocumentPositionParams): Comp
   }
 
   return allCompletionItems;
+});
+
+// This handler provides the hover information for the token.
+connection.onHover((textDocumentPosition: TextDocumentPositionParams): Hover => {
+  const doc = documents.get(textDocumentPosition.textDocument.uri);
+
+  // if the doc can't be found, return nothing
+  if (!doc) {
+    return { contents: [] };
+  }
+
+  const currentText = doc.getText({
+    start: { line: textDocumentPosition.position.line, character: 0 },
+    end: { line: textDocumentPosition.position.line, character: 1000 },
+  });
+
+  const result = Object.keys(tokens).find((token) => {
+    const indexOfFirst = currentText.indexOf(token);
+    return (
+      indexOfFirst > -1 &&
+      indexOfFirst <= textDocumentPosition.position.character &&
+      indexOfFirst >= textDocumentPosition.position.character - token.length
+    );
+  });
+
+  if (result === undefined) {
+    return {
+      contents: [],
+    };
+  }
+
+  return {
+    contents: `${result}: ${tokens[result].value};${tokens[result].note ? ` // ${tokens[result].note}` : ''}`,
+  };
 });
 
 // Make the text document manager listen on the connection
