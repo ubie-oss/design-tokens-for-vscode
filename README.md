@@ -10,9 +10,13 @@ WIP
 
 Autocomplete suggestions for the Ubie Design Tokens
 
+![Demo of autocomplete](https://github.com/ubie-oss/design-tokens-for-vscode/blob/main/docs/autocomplete.gif?raw=true)
+
 ### Hover preview
 
 See the exact value of the Ubie Design Tokens's CSS custom property by hovering over it.
+
+![Demo of hover preview](https://github.com/ubie-oss/design-tokens-for-vscode/blob/main/docs/hover.gif?raw=true)
 
 ## How to use
 
