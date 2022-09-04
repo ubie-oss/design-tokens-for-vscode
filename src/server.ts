@@ -141,7 +141,7 @@ connection.onHover((textDocumentPosition: TextDocumentPositionParams): Hover => 
   }
 
   return {
-    contents: `${result}: ${tokens[result].value};${tokens[result].note ? ` // ${tokens[result].note}` : ''}`,
+    contents: `${result}: ${tokens[result].value};${tokens[result].note ? ` /* ${tokens[result].note} */` : ''}`,
   };
 });
 
