@@ -1,4 +1,4 @@
-# Development
+# Contributing Guide
 
 ## System requirements
 
