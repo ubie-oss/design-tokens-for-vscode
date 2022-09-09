@@ -2,7 +2,7 @@
 
 ## Installation
 
-WIP
+[👉 Install via the Visual Studio Code Marketplace](https://marketplace.visualstudio.com/items?itemName=Ubie.ubie-design-tokens-for-vscode)
 
 ## Features
 
