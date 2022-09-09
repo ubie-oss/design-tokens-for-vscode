@@ -2,7 +2,7 @@
   "name": "ubie-design-tokens-for-vscode",
   "version": "0.0.3",
   "description": "Ubie Design Tokens for VS Code",
-  "publisher": "Ubie, Inc",
+  "publisher": "Ubie",
   "engines": {
     "vscode": "^1.70.0"
   },
