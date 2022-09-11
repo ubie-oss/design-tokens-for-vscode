@@ -22,7 +22,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/ubie-inc/design-tokens-for-vscode.git"
+    "url": "https://github.com/ubie-oss/design-tokens-for-vscode.git"
   },
   "icon": "docs/ubie-icon.png",
   "scripts": {
