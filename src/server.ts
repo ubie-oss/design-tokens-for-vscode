@@ -41,9 +41,10 @@ type GroupedCompletionItemPatterns = {
 };
 
 const groupedCompletionItemPatterns: GroupedCompletionItemPatterns = {
-  color: /color|background|shadow|border|column-rule|filter|opacity|outline|text-decoration/,
+  color: /color|background|shadow|border[^-radius]|column-rule|filter|opacity|outline|text-decoration/,
   size: /margin|padding|gap|top|left|right|bottom/,
   text: /font|line-height/,
+  radius: /border-radius/,
 };
 
 const tokens: { [key: string]: { value: string; note: string | undefined; groupKey: string } } = {};
