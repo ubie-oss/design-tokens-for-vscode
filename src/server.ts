@@ -45,6 +45,7 @@ const groupedCompletionItemPatterns: GroupedCompletionItemPatterns = {
   size: /margin|padding|gap|top|left|right|bottom/,
   text: /font|line-height/,
   radius: /border-radius/,
+  icon: /height|width/,
 };
 
 const tokens: { [key: string]: { value: string; note: string | undefined; groupKey: string } } = {};
